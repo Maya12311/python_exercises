@@ -1,0 +1,30 @@
+class Athlete:
+    def __init__(self, runner_name, gender):
+        self.__runner_name=runner_name
+        self.__gender=gender
+
+    def get_runner_name(self):
+        return self.__runner_name
+
+    def set_runner_name(self, new_name):
+        self.__runner_name = new_name
+
+    def get_gender(self):
+        return self.__gender
+    
+    def set_gender(self, new_gender):
+        self.__gender = new_gender
+    
+    def running(self):
+        if(self.__gender == 'girl'):
+            return "150mtr running"
+        else:
+            return "200mtr running"
+    
+
+maria = Athlete("Maria", "girl")
+
+print(maria.running())
+
+
+
