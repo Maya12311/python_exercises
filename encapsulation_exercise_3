@@ -1,0 +1,96 @@
+class Student:
+    def __init__(self):
+        self.__student_id = None
+        self.__marks = None
+        self.__age = None
+        self.__course_id = None
+        self.__fees = None
+
+    def get_student_id (self):
+        return self.__student_id
+    
+    def set_student_id (self, s_id):
+        self.__student_id = s_id
+    
+    def get_marks (self):
+        return self.__marks
+    
+    def set_marks (self, marks):
+        self.__marks = marks
+
+    def get_age (self):
+        return self.__age
+    
+    def set_age (self, age):
+        self.__age = age
+
+    def get_course_id (self):
+        return self.__course_id
+    
+    def set_course_id (self, course_id):
+        self.__course_id = course_id
+
+    def get_fees (self):
+        return self.__fees
+    
+    def set_fees (self, fees):
+        self.__fees = fees
+
+    
+    def validate_marks(self):
+        marks = self.get_marks()
+        if marks is None:
+            return False
+        if not (0 <= marks <= 100):
+            return False
+        return marks >=65
+    
+    def validate_age(self):
+        age = self.get_age() 
+        return age is not None and  age >=  20
+         
+        
+
+    def check_qualification(self):
+        return self.validate_age() and self.validate_marks()
+
+    
+    def choose_course(self, course_id):
+        fees = {
+        1001 : 25575.0,
+        1002 : 15500.0
+        }
+        
+        if course_id not in fees:
+            print("This is not a valid course id ")
+            return False
+        
+        self.set_course_id(course_id)
+        base_fee = fees[course_id]
+        discount = fees[course_id] * 0.25
+        
+
+        if self.get_marks() > 85: 
+            self.set_fees(base_fee - discount)
+        
+        else:
+            self.set_fees(base_fee)
+        print(f"the fee for the course {course_id} is {self.get_fees()}")
+
+        return True
+
+
+
+student1 = Student()
+student1.set_student_id(123)
+student1.set_age(20)
+student1.set_marks(70)
+result = student1.check_qualification()
+
+print (f"Does the student passes the tests? {result}")
+
+if result:
+    print(student1.choose_course(1001))
+    
+else:
+    print("your are not eligible")
