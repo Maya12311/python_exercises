@@ -1,0 +1,51 @@
+class Patient:
+
+    def __init__ (self, patient_id, patient_name, list_of_lab_test_ids):
+        self.__patient_id = patient_id
+        self.__patient_name = patient_name
+        self.__list_of_lab_test_ids = list_of_lab_test_ids
+        self.__lab_test_charge = self.calculate_lab_test_charge()
+
+        
+    def calculate_lab_test_charge(self):
+        charge = 0 
+        for test in self.__list_of_lab_test_ids:
+            pricing = LabTestRepository.get_test_charge(int(test))
+            if pricing != -1:
+                charge+= pricing
+        return charge
+
+    def get_patient_id(self):
+        return self.__patient_id
+    
+    def get_patient_name(self):
+        return self.__patient_name
+
+    def get_list_of_lab_test_ids(self):
+        return self.__list_of_lab_test_ids
+
+    def get_lab_test_charge(self):
+        return self.__lab_test_charge
+
+    
+class LabTestRepository:
+
+    __list_of_hospital_lab_test_ids =  [123, 456, 789, 101112]
+       
+    
+    __list_of_lab_test_charge= [100, 200, 300, 400]
+      
+    
+    @staticmethod
+    def get_test_charge(lab_test_id):
+        list_of_ids = LabTestRepository.__list_of_hospital_lab_test_ids   
+        for index, id in enumerate(list_of_ids):
+            if id == lab_test_id:
+                return LabTestRepository.__list_of_lab_test_charge[index]
+        return -1
+    
+
+
+patient1 = Patient(100005, "Tom", [123, 101112])
+
+print(f"The costs for the patient are {patient1.get_lab_test_charge()}")
