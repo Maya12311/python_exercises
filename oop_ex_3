@@ -46,6 +46,6 @@ class LabTestRepository:
     
 
 
-patient1 = Patient(100005, "Tom", [123, 101112])
+patient1 = Patient(100005, "Tom", [ 456])
 
 print(f"The costs for the patient are {patient1.get_lab_test_charge()}")
