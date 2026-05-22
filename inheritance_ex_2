@@ -1,0 +1,93 @@
+from abc import ABC, abstractmethod
+
+class Customer:
+    def __init__(self, customer_name):
+        self.__customer_name = customer_name
+        self.bill_amount = 0
+        self.bill_id = 0
+
+    @abstractmethod
+    def calculate_bill_amount(self):
+        pass
+        
+    def get_customer_name(self):
+        return self.__customer_name
+    
+
+class OccasionaCustomer(Customer):
+
+    counter=1000
+
+    def __init__(self, customer_name, distance_in_km):
+        super().__init__(customer_name)
+        self.__distance_in_km = distance_in_km
+        OccasionaCustomer.counter += 1
+        self.bill_id = "O" + str(OccasionaCustomer.counter)
+
+
+    def validate_distance_in_kms(self):
+        distance = self.get_distance_in_kms() 
+        return True if distance >= 1 and distance<= 5 else False
+
+    def calculate_bill_amount(self):
+        if self.validate_distance_in_kms():
+            self.bill_amount += 50
+            if self.bill_amount > 50 :
+                return "you cant order more than one tiffin"
+            distance = self.get_distance_in_kms()
+            cost_distance = distance*5 if distance >=1 and distance <=2 else distance*7.5
+            self.bill_amount = cost_distance + self.bill_amount
+            return self.bill_amount
+
+        else: 
+            self.bill_amount = -1
+            return self.bill_amount
+        
+
+    def get_distance_in_kms(self):
+        return self.__distance_in_km
+    
+
+class RegularCustomer(Customer):
+
+    counter=1000
+
+    def __init__(self, customer_name, no_of_tiffin):
+        super().__init__(customer_name)
+        self.__no_of_tiffin = no_of_tiffin
+        RegularCustomer.counter += 1
+        self.bill_id = "R" + str(RegularCustomer.counter)
+
+
+
+    def validate_no_of_tiffin(self):
+        tiffin = self.get_no_of_tiffin() 
+        return True if tiffin >= 1 or tiffin <= 7 else False
+
+    def calculate_bill_amount(self):
+        tiffin = self.validate_no_of_tiffin()
+        if tiffin:
+            total= tiffin * 50 
+            
+            if tiffin >= 3 and tiffin <= 5:
+                total -= total * 0.1
+            elif tiffin >= 6 and tiffin <= 7:
+                total -= total * 0.3
+            self.bill_amount = total
+            return self.bill_amount
+        
+        else:
+            self.bill_amount = -1
+        return self.bill_amount
+
+        
+    def get_no_of_tiffin(self):
+        return self.__no_of_tiffin
+    
+oc1 = OccasionaCustomer("Mari", 2)
+print(oc1.calculate_bill_amount())
+print(oc1.bill_id)
+
+rc1 = RegularCustomer("John", 2)
+print(rc1.calculate_bill_amount())
+print(rc1.bill_id)
