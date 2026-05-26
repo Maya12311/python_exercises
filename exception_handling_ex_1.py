@@ -36,16 +36,15 @@ class InvalidMechanicSpecializationException(Exception):
 
 class VehicleService:
     def __init__(self, mechanic_list):
-        self.mechanic_list= mechanic_list
+        self.__mechanic_list= mechanic_list
 
     def assign_vehicle_for_service(self, mechanic_id, vehicle_type):
-        
         mechanic_id_is_present = False
-        for mech in self.mechanic_list.values():
+        for mech in self.__mechanic_list.values():
             if mechanic_id == mech.get_mechanic_id():
                 mechanic_id_is_present = True
-                if mech.get_spezialization() != vehicle_type:
-                    raise InvalidMechanicSpecializationException(mech.get_spezialization())
+                if mech.get_specialization() != vehicle_type:
+                    raise InvalidMechanicSpecializationException(mech.get_specialization())
                 mech.set_vehicle_count(mech.get_vehicle_count() + 1)
                 break
 
